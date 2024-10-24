@@ -17,10 +17,46 @@ namespace TestToolkit;
  * non-strings, non-integers, booleans, and combinations of test data (Cartesian
  * product).
  *
+ * Example usage:
+ * ```php
+ * use \PHPUnit\Framework\TestCase;
+ * use \PHPUnit\Framework\Attributes\DataProviderExternal;
+ *
+ * class ExampleTest extends TestCase
+ * {
+ *     #[DataProviderExternal(DataHelper::class, 'NonStringProvider')]
+ *     public function testConstructorWithNonStringValue($nonString)
+ *     {
+ *         $this->expectException(\TypeError::class);
+ *         new ExampleClass($nonString);
+ *     }
+ * }
+ * ```
+ *
  * @codeCoverageIgnore
  */
 class DataHelper
 {
+    /**
+     * Provides non-string, non-Stringable values.
+     *
+     * @return array
+     *   Returns an array of non-string, non-Stringable values.
+     */
+    public static function NonStringProvider(): array
+    {
+        return [
+            'null' => [null],
+            'boolean/true' => [true],
+            'boolean/false' => [false],
+            'integer' => [12345],
+            'float' => [123.45],
+            'array' => [['not', 'a', 'string']],
+            'object' => [new \stdClass()],
+            'callable' => [fn() => 'I am a callable']
+        ];
+    }
+
     /**
      * Generates the Cartesian product of multiple arrays.
      *
@@ -31,7 +67,7 @@ class DataHelper
      * arrays, each containing a unique combination of elements from the input
      * arrays.
      *
-     * Example usage in PHPUnit data provider:
+     * Example usage:
      * ```php
      * public function dataProvider() {
      *     return DataHelper::Cartesian([1, 2, 3], ['a', 'b']);
