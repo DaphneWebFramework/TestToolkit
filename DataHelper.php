@@ -58,6 +58,20 @@ class DataHelper
     }
 
     /**
+     * Provides non-string, non-Stringable values, excluding `null`.
+     *
+     * @return array
+     *   Returns an array of non-string, non-Stringable values, excluding `null`.
+     */
+    public static function NonStringExcludingNullProvider(): array
+    {
+        $data = self::NonStringProvider();
+        return \array_filter($data, function($value) {
+            return $value[0] !== null;
+        });
+    }
+
+    /**
      * Generates the Cartesian product of multiple arrays.
      *
      * This function is designed to calculate the cartesian product of multiple
