@@ -72,6 +72,27 @@ class DataHelper
     }
 
     /**
+     * Provides non-integer values.
+     *
+     * @return array
+     *   Returns an array of non-integer values.
+     */
+    public static function NonIntegerProvider(): array
+    {
+        return [
+            'null' => [null],
+            'boolean/true' => [true],
+            'boolean/false' => [false],
+            'string' => ['I am a string'],
+            'string/numeric' => ['123'],
+            'float' => [123.45],
+            'array' => [[1, 2, 3]],
+            'object' => [new \stdClass()],
+            'callable' => [fn() => 'I am a callable']
+        ];
+    }
+
+    /**
      * Generates the Cartesian product of multiple arrays.
      *
      * This function is designed to calculate the cartesian product of multiple
