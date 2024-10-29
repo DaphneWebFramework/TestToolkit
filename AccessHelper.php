@@ -229,4 +229,37 @@ class AccessHelper
         }
         return $object;
     }
+
+    /**
+     * Calls a non-public (private or protected) method on an object.
+     *
+     * This method allows for the invocation of non-public methods, enabling
+     * unit testing or advanced manipulation of otherwise inaccessible logic.
+     *
+     * @param object $object
+     *   The object instance on which to invoke the non-public method.
+     * @param string $methodName
+     *   The name of the non-public method to invoke.
+     * @param array $args (Optional)
+     *   An array of arguments to pass to the method.
+     * @return mixed
+     *   The result of the invoked method.
+     * @throws \ReflectionException
+     *   If the method does not exist or cannot be accessed.
+     */
+    public static function CallNonPublicMethod(
+        object $object,
+        string $methodName,
+        array $args = []
+        ): mixed
+    {
+        $reflectionClass = new \ReflectionClass($object);
+        $reflectionMethod = $reflectionClass->getMethod($methodName);
+        $reflectionMethod->setAccessible(true);
+        if (empty($args)) {
+            return $reflectionMethod->invoke($object);
+        } else {
+            return $reflectionMethod->invokeArgs($object, $args);
+        }
+    }
 }
