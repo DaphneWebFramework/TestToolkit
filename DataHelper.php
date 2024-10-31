@@ -72,6 +72,28 @@ class DataHelper
     }
 
     /**
+     * Provides non-boolean values.
+     *
+     * @return array
+     *   Returns an array of non-boolean values.
+     */
+    public static function NonBooleanProvider(): array
+    {
+        return [
+            'null' => [null],
+            'integer' => [12345],
+            'float' => [123.45],
+            'string' => ['I am a string'],
+            'string/true' => ['true'],
+            'string/false' => ['false'],
+            'string/numeric' => ['123'],
+            'array' => [['not', 'a', 'boolean']],
+            'object' => [new \stdClass()],
+            'callable' => [fn() => 'I am a callable']
+        ];
+    }
+
+    /**
      * Provides non-integer values.
      *
      * @return array
@@ -83,9 +105,9 @@ class DataHelper
             'null' => [null],
             'boolean/true' => [true],
             'boolean/false' => [false],
+            'float' => [123.45],
             'string' => ['I am a string'],
             'string/numeric' => ['123'],
-            'float' => [123.45],
             'array' => [[1, 2, 3]],
             'object' => [new \stdClass()],
             'callable' => [fn() => 'I am a callable']
