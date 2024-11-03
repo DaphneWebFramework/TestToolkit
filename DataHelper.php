@@ -115,6 +115,26 @@ class DataHelper
     }
 
     /**
+     * Provides non-array values.
+     *
+     * @return array
+     *   Returns an array of values that are not arrays.
+     */
+    public static function NonArrayProvider(): array
+    {
+        return [
+            'null' => [null],
+            'boolean/true' => [true],
+            'boolean/false' => [false],
+            'integer' => [123],
+            'float' => [123.45],
+            'string' => ['I am a string'],
+            'object' => [new \stdClass()],
+            'callable' => [fn() => 'I am a callable']
+        ];
+    }
+
+    /**
      * Generates the Cartesian product of multiple arrays.
      *
      * This function is designed to calculate the cartesian product of multiple
@@ -126,7 +146,7 @@ class DataHelper
      *
      * Example usage:
      * ```php
-     * public function dataProvider() {
+     * static function dataProvider() {
      *     return DataHelper::Cartesian([1, 2, 3], ['a', 'b']);
      * }
      *
