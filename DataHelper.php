@@ -22,13 +22,15 @@ namespace TestToolkit;
  * use \PHPUnit\Framework\TestCase;
  * use \PHPUnit\Framework\Attributes\DataProviderExternal;
  *
+ * use \TestToolkit\DataHelper;
+ *
  * class ExampleTest extends TestCase
  * {
  *     #[DataProviderExternal(DataHelper::class, 'NonStringProvider')]
- *     public function testConstructorWithNonStringValue($nonString)
+ *     public function testConstructorWithNonStringValue($value)
  *     {
  *         $this->expectException(\TypeError::class);
- *         new ExampleClass($nonString);
+ *         new ExampleClass($value);
  *     }
  * }
  * ```
@@ -108,6 +110,25 @@ class DataHelper
             'float' => [123.45],
             'string' => ['I am a string'],
             'string/numeric' => ['123'],
+            'array' => [[1, 2, 3]],
+            'object' => [new \stdClass()],
+            'callable' => [fn() => 'I am a callable']
+        ];
+    }
+
+    /**
+     * Provides non-string, non-integer values.
+     *
+     * @return array
+     *   Returns an array of values that are neither strings nor integers.
+     */
+    public static function NonStringOrIntegerProvider(): array
+    {
+        return [
+            'null' => [null],
+            'boolean/true' => [true],
+            'boolean/false' => [false],
+            'float' => [123.45],
             'array' => [[1, 2, 3]],
             'object' => [new \stdClass()],
             'callable' => [fn() => 'I am a callable']
