@@ -17,7 +17,7 @@ namespace TestToolkit;
  * non-strings, non-integers, booleans, and combinations of test data (Cartesian
  * product).
  *
- * Example usage:
+ * #### Example
  * ```php
  * use \PHPUnit\Framework\TestCase;
  * use \PHPUnit\Framework\Attributes\DataProviderExternal;
@@ -165,7 +165,7 @@ class DataHelper
      * arrays, each containing a unique combination of elements from the input
      * arrays.
      *
-     * Example usage:
+     * #### Example
      * ```php
      * static function dataProvider() {
      *     return DataHelper::Cartesian([1, 2, 3], ['a', 'b']);
