@@ -10,14 +10,11 @@
 
 ## Features
 
-### 1. **AccessHelper**
+### **AccessHelper**
 Provides access to non-public properties and methods using PHP's reflection API, enabling modification and retrieval of otherwise inaccessible values.
 
-### 2. **DataHelper**
+### **DataHelper**
 Provides reusable data sets for PHPUnit, including common value types like non-strings, non-integers, booleans, and combinations of test data (Cartesian product).
-
-### 3. **SingletonHelper**
-Manages Singleton instances in tests, allowing you to back up, restore, and modify them as needed. Depends on the **[Harmonia](https://github.com/DaphneWebFramework/Harmonia)** library.
 
 ## Installation
 
