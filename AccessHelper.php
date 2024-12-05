@@ -202,8 +202,8 @@ class AccessHelper
      *
      * @param object|string $objectOrClassName
      *   An object or a fully qualified class name.
-     * @param array $args (Optional)
-     *   An array of arguments to pass to the constructor.
+     * @param array $args
+     *   (Optional) An array of arguments to pass to the constructor.
      * @return object
      *   The object with its constructor invoked.
      * @throws \ReflectionException
@@ -240,8 +240,8 @@ class AccessHelper
      *   The object instance on which to invoke the non-public method.
      * @param string $methodName
      *   The name of the non-public method to invoke.
-     * @param array $args (Optional)
-     *   An array of arguments to pass to the method.
+     * @param array $args
+     *   (Optional) An array of arguments to pass to the method.
      * @return mixed
      *   The result of the invoked method.
      * @throws \ReflectionException
