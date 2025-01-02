@@ -41,7 +41,7 @@ class AccessHelper
         object $object,
         string $propertyName,
         mixed $propertyValue
-        ): void
+    ): void
     {
         $reflectionClass = new \ReflectionClass($object);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -64,7 +64,7 @@ class AccessHelper
     public static function GetNonPublicProperty(
         object $object,
         string $propertyName
-        ): mixed
+    ): mixed
     {
         $reflectionClass = new \ReflectionClass($object);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -93,7 +93,7 @@ class AccessHelper
         string $className,
         string $propertyName,
         mixed $propertyValue
-        ): void
+    ): void
     {
         $reflectionClass = new \ReflectionClass($className);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -117,7 +117,7 @@ class AccessHelper
     public static function GetNonPublicStaticProperty(
         string $className,
         string $propertyName
-        ): mixed
+    ): mixed
     {
         $reflectionClass = new \ReflectionClass($className);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -153,7 +153,7 @@ class AccessHelper
         object $mockObject,
         string $propertyName,
         mixed $propertyValue
-        ): void
+    ): void
     {
         $reflectionClass = new \ReflectionClass($className);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -184,7 +184,7 @@ class AccessHelper
         string $className,
         object $mockObject,
         string $propertyName
-        ): mixed
+    ): mixed
     {
         $reflectionClass = new \ReflectionClass($className);
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
@@ -202,7 +202,7 @@ class AccessHelper
      *
      * @param object|string $objectOrClassName
      *   An object or a fully qualified class name.
-     * @param array $args
+     * @param ?array $args
      *   (Optional) An array of arguments to pass to the constructor.
      * @return object
      *   The object with its constructor invoked.
@@ -212,8 +212,8 @@ class AccessHelper
      */
     public static function CallNonPublicConstructor(
         object|string $objectOrClassName,
-        array $args = []
-        ): object
+        ?array $args = null
+    ): object
     {
         $reflectionClass = new \ReflectionClass($objectOrClassName);
         $object = \is_string($objectOrClassName)
@@ -221,7 +221,7 @@ class AccessHelper
             : $objectOrClassName;
         $reflectionMethod = $reflectionClass->getConstructor();
         if ($reflectionMethod !== null) {
-            if (empty($args)) {
+            if ($args === null) {
                 $reflectionMethod->invoke($object);
             } else {
                 $reflectionMethod->invokeArgs($object, $args);
@@ -231,7 +231,7 @@ class AccessHelper
     }
 
     /**
-     * Calls a non-public (private or protected) method on an object.
+     * Invokes a non-public (private or protected) method on an object.
      *
      * This method allows for the invocation of non-public methods, enabling
      * unit testing or advanced manipulation of otherwise inaccessible logic.
@@ -240,7 +240,7 @@ class AccessHelper
      *   The object instance on which to invoke the non-public method.
      * @param string $methodName
      *   The name of the non-public method to invoke.
-     * @param array $args
+     * @param ?array $args
      *   (Optional) An array of arguments to pass to the method.
      * @return mixed
      *   The result of the invoked method.
@@ -250,16 +250,50 @@ class AccessHelper
     public static function CallNonPublicMethod(
         object $object,
         string $methodName,
-        array $args = []
-        ): mixed
+        ?array $args = null
+    ): mixed
     {
         $reflectionClass = new \ReflectionClass($object);
         $reflectionMethod = $reflectionClass->getMethod($methodName);
         $reflectionMethod->setAccessible(true);
-        if (empty($args)) {
+        if ($args === null) {
             return $reflectionMethod->invoke($object);
         } else {
             return $reflectionMethod->invokeArgs($object, $args);
+        }
+    }
+
+    /**
+     * Invokes a non-public (private or protected) static method on a class.
+     *
+     * This method allows for the invocation of non-public static methods,
+     * enabling unit testing or advanced manipulation of otherwise inaccessible
+     * logic.
+     *
+     * @param string $className
+     *   The name of the class on which to invoke the non-public static method.
+     * @param string $methodName
+     *   The name of the non-public static method to invoke.
+     * @param ?array $args
+     *   (Optional) An array of arguments to pass to the method.
+     * @return mixed
+     *   The result of the invoked method.
+     * @throws \ReflectionException
+     *   If the method does not exist or cannot be accessed.
+     */
+    public static function CallNonPublicStaticMethod(
+        string $className,
+        string $methodName,
+        ?array $args = null
+    ): mixed
+    {
+        $reflectionClass = new \ReflectionClass($className);
+        $reflectionMethod = $reflectionClass->getMethod($methodName);
+        $reflectionMethod->setAccessible(true);
+        if ($args === null) {
+            return $reflectionMethod->invoke(null);
+        } else {
+            return $reflectionMethod->invokeArgs(null, $args);
         }
     }
 }
