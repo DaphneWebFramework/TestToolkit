@@ -21,13 +21,13 @@ Provides reusable data sets for PHPUnit, including common value types like non-s
 ### Adding
 
 ```
-git submodule add https://github.com/DaphneWebFramework/TestToolkit.git source/classes/TestToolkit
+git submodule add https://github.com/DaphneWebFramework/TestToolkit.git source/backend/TestToolkit
 ```
 
 ### Updating
 
 ```
-git submodule update --remote --merge source/classes/TestToolkit
+git submodule update --remote --merge source/backend/TestToolkit
 ```
 
 ## See Also
