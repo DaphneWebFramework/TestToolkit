@@ -27,7 +27,7 @@ namespace TestToolkit;
  * class ExampleTest extends TestCase
  * {
  *     #[DataProviderExternal(DataHelper::class, 'NonStringProvider')]
- *     public function testConstructorWithNonStringValue($value)
+ *     function testConstructorWithNonStringValue($value)
  *     {
  *         $this->expectException(\TypeError::class);
  *         new ExampleClass($value);
