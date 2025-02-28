@@ -16,13 +16,15 @@ namespace TestToolkit;
  * Provides access to non-public properties and methods using PHP's reflection
  * API, enabling modification and retrieval of otherwise inaccessible values.
  *
+ * While primarily intended for private and protected members, these methods
+ * can also be used to access public properties and methods.
+ *
  * @codeCoverageIgnore
  */
 class AccessHelper
 {
     /**
-     * Sets the value of a non-public (private or protected) property in an
-     * object.
+     * Sets the value of a property in an object.
      *
      * @param object $object
      *   The object in which to set the non-public property value.
@@ -37,7 +39,7 @@ class AccessHelper
      *   If the property is read-only, a fatal error will be thrown when
      *   attempting to modify it.
      */
-    public static function SetNonPublicProperty(
+    public static function SetProperty(
         object $object,
         string $propertyName,
         mixed $propertyValue
@@ -49,8 +51,7 @@ class AccessHelper
     }
 
     /**
-     * Retrieves the value of a non-public (private or protected) property from
-     * an object.
+     * Retrieves the value of a property from an object.
      *
      * @param object $object
      *   The object from which to retrieve the non-public property value.
@@ -61,7 +62,7 @@ class AccessHelper
      * @throws \ReflectionException
      *   If the property does not exist or cannot be accessed.
      */
-    public static function GetNonPublicProperty(
+    public static function GetProperty(
         object $object,
         string $propertyName
     ): mixed
@@ -72,8 +73,7 @@ class AccessHelper
     }
 
     /**
-     * Sets the value of a non-public (private or protected) static property in
-     * a class.
+     * Sets the value of a static property in a class.
      *
      * @param string $className
      *   The name of the class in which to set the non-public static property
@@ -89,7 +89,7 @@ class AccessHelper
      *   If the property is read-only, a fatal error will be thrown when
      *   attempting to modify it.
      */
-    public static function SetNonPublicStaticProperty(
+    public static function SetStaticProperty(
         string $className,
         string $propertyName,
         mixed $propertyValue
@@ -101,8 +101,7 @@ class AccessHelper
     }
 
     /**
-     * Retrieves the value of a non-public (private or protected) static
-     * property from a class.
+     * Retrieves the value of a static property from a class.
      *
      * @param string $className
      *   The name of the class from which to retrieve the non-public static
@@ -114,7 +113,7 @@ class AccessHelper
      * @throws \ReflectionException
      *   If the property does not exist or cannot be accessed.
      */
-    public static function GetNonPublicStaticProperty(
+    public static function GetStaticProperty(
         string $className,
         string $propertyName
     ): mixed
@@ -125,8 +124,7 @@ class AccessHelper
     }
 
     /**
-     * Sets the value of a non-public (private or protected) property in a mock
-     * object.
+     * Sets the value of a property in a mock object.
      *
      * This method is specifically designed for use with mock objects in unit
      * tests, allowing for the modification of properties that are not publicly
@@ -148,7 +146,7 @@ class AccessHelper
      *   If the property is read-only, a fatal error will be thrown when
      *   attempting to modify it.
      */
-    public static function SetNonPublicMockProperty(
+    public static function SetMockProperty(
         string $className,
         object $mockObject,
         string $propertyName,
@@ -161,8 +159,7 @@ class AccessHelper
     }
 
     /**
-     * Retrieves the value of a non-public (private or protected) property from
-     * a mock object.
+     * Retrieves the value of a property from a mock object.
      *
      * This method is particularly useful in unit testing scenarios where there
      * is a need to access properties of mock objects that are not publicly
@@ -180,7 +177,7 @@ class AccessHelper
      * @throws \ReflectionException
      *   If the property does not exist or cannot be accessed.
      */
-    public static function GetNonPublicMockProperty(
+    public static function GetMockProperty(
         string $className,
         object $mockObject,
         string $propertyName
@@ -192,8 +189,7 @@ class AccessHelper
     }
 
     /**
-     * Invokes the non-public (private or protected) constructor of a given
-     * object or class.
+     * Invokes the constructor of a given object or class.
      *
      * If the first argument is an object, it calls the non-public constructor
      * of that object. If it's a string, it treats it as a class name and
@@ -210,7 +206,7 @@ class AccessHelper
      *   If the constructor cannot be accessed, or if the class does not exist
      *   when a class name is provided.
      */
-    public static function CallNonPublicConstructor(
+    public static function CallConstructor(
         object|string $objectOrClassName,
         ?array $args = null
     ): object
@@ -231,7 +227,7 @@ class AccessHelper
     }
 
     /**
-     * Invokes a non-public (private or protected) method on an object.
+     * Invokes a method on an object.
      *
      * This method allows for the invocation of non-public methods, enabling
      * unit testing or advanced manipulation of otherwise inaccessible logic.
@@ -247,7 +243,7 @@ class AccessHelper
      * @throws \ReflectionException
      *   If the method does not exist or cannot be accessed.
      */
-    public static function CallNonPublicMethod(
+    public static function CallMethod(
         object $object,
         string $methodName,
         ?array $args = null
@@ -264,7 +260,7 @@ class AccessHelper
     }
 
     /**
-     * Invokes a non-public (private or protected) static method on a class.
+     * Invokes a static method on a class.
      *
      * This method allows for the invocation of non-public static methods,
      * enabling unit testing or advanced manipulation of otherwise inaccessible
@@ -281,7 +277,7 @@ class AccessHelper
      * @throws \ReflectionException
      *   If the method does not exist or cannot be accessed.
      */
-    public static function CallNonPublicStaticMethod(
+    public static function CallStaticMethod(
         string $className,
         string $methodName,
         ?array $args = null
