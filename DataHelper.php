@@ -40,6 +40,20 @@ namespace TestToolkit;
 class DataHelper
 {
     /**
+     * Provides boolean values.
+     *
+     * @return array
+     *   Returns an array of boolean values.
+     */
+    public static function BooleanProvider(): array
+    {
+        return [
+            'true' => [true],
+            'false' => [false]
+        ];
+    }
+
+    /**
      * Provides non-string, non-Stringable values.
      *
      * @return array
