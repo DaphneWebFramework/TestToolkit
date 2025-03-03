@@ -68,6 +68,14 @@ class AccessHelper
     ): mixed
     {
         $reflectionClass = new \ReflectionClass($object);
+        while (!$reflectionClass->hasProperty($propertyName)) {
+            $reflectionClass = $reflectionClass->getParentClass();
+            if (!$reflectionClass) {
+                $class = \get_class($object);
+                throw new \ReflectionException(
+                    "Property {$class}::\${$propertyName} does not exist");
+            }
+        }
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
         return $reflectionProperty->getValue($object);
     }
