@@ -24,6 +24,33 @@ namespace TestToolkit;
 class AccessHelper
 {
     /**
+     * Retrieves the value of a constant from a class.
+     *
+     * @param string $className
+     *   The name of the class from which to retrieve the non-public constant
+     *   value.
+     * @param string $constantName
+     *   The name of the non-public constant.
+     * @return mixed
+     *   The value of the specified constant.
+     * @throws \ReflectionException
+     *   If the constant does not exist or cannot be accessed.
+     */
+    public static function GetConstant(
+        string $className,
+        string $constantName
+    ): mixed
+    {
+        $reflectionClass = new \ReflectionClass($className);
+        $reflectionConstant = $reflectionClass->getReflectionConstant($constantName);
+        if ($reflectionConstant === false) {
+            throw new \ReflectionException(
+                "Constant {$className}::{$constantName} does not exist.");
+        }
+        return $reflectionConstant->getValue();
+    }
+
+    /**
      * Sets the value of a property in an object.
      *
      * @param object $object
@@ -73,7 +100,7 @@ class AccessHelper
             if (!$reflectionClass) {
                 $class = \get_class($object);
                 throw new \ReflectionException(
-                    "Property {$class}::\${$propertyName} does not exist");
+                    "Property {$class}::\${$propertyName} does not exist.");
             }
         }
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
