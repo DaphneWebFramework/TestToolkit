@@ -82,9 +82,8 @@ class DataHelper
     public static function NonStringExcludingNullProvider(): array
     {
         $data = self::NonStringProvider();
-        return \array_filter($data, function($value) {
-            return $value[0] !== null;
-        });
+        unset($data['null']);
+        return $data;
     }
 
     /**
@@ -131,6 +130,20 @@ class DataHelper
     }
 
     /**
+     * Provides non-integer values, excluding strings that represent integers.
+     *
+     * @return array
+     *   Returns an array of values that are neither integers nor stringified
+     *   integers.
+     */
+    public static function NonIntegerExcludingNumericStringProvider(): array
+    {
+        $data = self::NonIntegerProvider();
+        unset($data['string/numeric']);
+        return $data;
+    }
+
+    /**
      * Provides non-string, non-integer values.
      *
      * @return array
@@ -138,15 +151,9 @@ class DataHelper
      */
     public static function NonStringOrIntegerProvider(): array
     {
-        return [
-            'null' => [null],
-            'boolean/true' => [true],
-            'boolean/false' => [false],
-            'float' => [123.45],
-            'array' => [[1, 2, 3]],
-            'object' => [new \stdClass()],
-            'callable' => [fn() => 'I am a callable']
-        ];
+        $data = self::NonIntegerProvider();
+        unset($data['string'], $data['string/numeric']);
+        return $data;
     }
 
     /**
