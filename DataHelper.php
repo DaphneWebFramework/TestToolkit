@@ -18,6 +18,7 @@ namespace TestToolkit;
  * product).
  *
  * #### Example
+ * 
  * ```php
  * use \PHPUnit\Framework\TestCase;
  * use \PHPUnit\Framework\Attributes\DataProviderExternal;
