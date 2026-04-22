@@ -26,7 +26,7 @@ use PHPUnit\Framework\MockObject\Rule\InvokedCount;
  *    neatly organized in one object.
  *
  * 2. Execution Gating (The Pass Filter): Manages a cumulative logic chain for
- *    mock expectations. Using 'pass()' and 'passIf()', it determines whether
+ *    mock expectations. Using 'chain()' and 'chainIf()', it determines whether
  *    a method is expected to be called or not, based on the scenario's setup.
  *
  * #### Example
@@ -81,11 +81,11 @@ use PHPUnit\Framework\MockObject\Rule\InvokedCount;
  *         $ctx->fileService = new FileService($ctx->storage);
  *         $ctx->data = "hello";
  *
- *         $ctx->storage->expects($ctx->pass())
+ *         $ctx->storage->expects($ctx->chain())
  *             ->method('HasPermission')
  *             ->willReturn($hasPermission);
  *
- *         $ctx->storage->expects($ctx->passIf($hasPermission))
+ *         $ctx->storage->expects($ctx->chainIf($hasPermission))
  *             ->method('Write')
  *             ->with($ctx->data)
  *             ->willReturn($writeSucceeds);
@@ -121,22 +121,22 @@ use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 class Context extends \stdClass
 {
     private TestCase $testCase;
-    private int $bit;
+    private int $times;
 
     public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
-        $this->bit = 1;
+        $this->times = 1;
     }
 
-    public function pass(): InvokedCount
+    public function chain(): InvokedCount
     {
         return $this->matcher();
     }
 
-    public function passIf(bool $condition): InvokedCount
+    public function chainIf(bool $condition): InvokedCount
     {
-        $this->bit &= $condition;
+        $this->times &= $condition;
         return $this->matcher();
     }
 
@@ -144,7 +144,11 @@ class Context extends \stdClass
 
     private function matcher(): InvokedCount
     {
-        return AccessHelper::CallMethod($this->testCase, 'exactly', [$this->bit]);
+        return AccessHelper::CallMethod(
+            $this->testCase,
+            'exactly',
+            [$this->times]
+        );
     }
 
     #endregion private
