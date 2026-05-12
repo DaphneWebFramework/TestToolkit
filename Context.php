@@ -136,8 +136,18 @@ class Context extends \stdClass
 
     public function chainIf(bool $condition): InvokedCount
     {
-        $this->times &= $condition;
+        $this->update($condition);
         return $this->matcher();
+    }
+
+    public function update(bool $condition): void
+    {
+        $this->times &= $condition;
+    }
+
+    public function isFailed(): bool
+    {
+        return $this->times === 0;
     }
 
     #region private ------------------------------------------------------------
